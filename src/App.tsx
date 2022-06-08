@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -9,19 +10,23 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Box = styled.div`
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+const Svg = styled(motion.svg)`
+  width: 150px;
+  height: 100px;
 `;
+
+const svgVariants = {
+  start: {
+    fill: "transparent",
+    pathLength: 0,
+    stroke: "rgba(255,255,255,1)",
+    strokeWidth: 6,
+  },
+  end: { pathLength: 1, stroke: "#feee34", transition: { duration: 4 } },
+};
+
 function App() {
-  return (
-    <Wrapper>
-      <Box />
-    </Wrapper>
-  );
+  return <Wrapper></Wrapper>;
 }
 
 export default App;
