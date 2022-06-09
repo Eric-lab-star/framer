@@ -1,53 +1,73 @@
-import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { MouseEvent, useState } from "react";
+import { exit } from "process";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(183, 14, 255, 1);
+`;
+
+const GridBox = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+`;
+
+const Box = styled(motion.div)`
+  display: flex;
+  height: 200px;
+  min-width: 200px;
+  background-color: white;
+  border-radius: 15px;
+  justify-content: center;
+  width: 100%;
+  :first-child,
+  :last-child {
+    grid-column: span 2;
+  }
+`;
+
+const PopupBox = styled(motion.div)`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(183, 14, 255, 0.6);
+  position: absolute;
+  display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Container = styled(motion.div)`
-  height: 100px;
-  width: 100px;
-  background-color: white;
-  border-radius: 15px;
-  margin-bottom: 200px;
-  position: absolute;
+const PopUp = styled(Box)`
+  width: 400px;
 `;
 
-const boxVariant = {
-  start: {
-    scale: 1,
-  },
-  end: {
-    scale: 1.5,
-    rotateZ: 90,
-    transition: {
-      duration: 1,
-      type: "spring",
-      bounce: 0.5,
-    },
-  },
-};
-
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onClick = () => {
-    setShowing((prev) => !prev);
-  };
+  const [clickedId, setClickedId] = useState("");
+  const layoutIdArray = ["1", "2", "3", "4"];
+
   return (
     <Wrapper>
+      <GridBox>
+        {layoutIdArray.map((v) => (
+          <Box key={v} layoutId={v} onClick={() => setClickedId(v)} />
+        ))}
+      </GridBox>
       <AnimatePresence>
-        {showing ? (
-          <Container variants={boxVariant} initial="start" animate="end" />
+        {clickedId ? (
+          <PopupBox
+            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setClickedId("")}
+          >
+            <PopUp layoutId={clickedId} />
+          </PopupBox>
         ) : null}
       </AnimatePresence>
-      <button onClick={onClick}>Click</button>
     </Wrapper>
   );
 }
