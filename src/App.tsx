@@ -25,7 +25,6 @@ const Box = styled(motion.div)`
   background-color: white;
   border-radius: 15px;
   justify-content: center;
-  width: 100%;
   :first-child,
   :last-child {
     grid-column: span 2;
@@ -35,7 +34,6 @@ const Box = styled(motion.div)`
 const PopupBox = styled(motion.div)`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(183, 14, 255, 0.6);
   position: absolute;
   display: flex;
   justify-content: center;
@@ -61,7 +59,9 @@ function App() {
         {clickedId ? (
           <PopupBox
             transition={{ duration: 0.3 }}
-            exit={{ opacity: 0 }}
+            initial={{ backgroundColor: "rgba(183, 14, 255, 0)" }}
+            animate={{ backgroundColor: "rgba(183, 14, 255, 0.6)" }}
+            exit={{ backgroundColor: "rgba(183, 14, 255, 0)" }}
             onClick={() => setClickedId("")}
           >
             <PopUp layoutId={clickedId} />
